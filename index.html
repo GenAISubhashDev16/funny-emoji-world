@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7857ff">
+<meta name="description" content="Funny Emoji World: tap emojis, hear happy sounds, laughs and morning vibes.">
+<title>Funny Emoji World 😂</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😂</text></svg>">
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="floaters" aria-hidden="true"></div>
+<div id="sunrise" class="sunrise" aria-hidden="true">
+  <span class="sun">🌞</span>
+  <span class="bird" style="--d:.2s;--y:-40px;top:18%">🐦</span>
+  <span class="bird" style="--d:.8s;--y:30px;top:30%">🦋</span>
+  <span class="bird" style="--d:1.4s;--y:-20px;top:24%">🐦</span>
+</div>
+
+<header class="navbar">
+  <a class="logo" href="#top">😂 Emoji World</a>
+  <span class="nav-tag">Spread Happiness ✨</span>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <button id="mascot" class="mascot" aria-label="Tap the big emoji">😂</button>
+    <div class="pill" id="greet">🎉 YOUR DAILY DOSE OF FUN</div>
+    <h1>Make Your Day<br><span>Extra Smiley!</span></h1>
+    <p>Funny emojis, happy sounds, big laughs and good-morning vibes. Tap anything and see what happens!</p>
+
+    <div class="hero-buttons">
+      <button id="morningBtn">🌞 Good Morning</button>
+      <button id="laughBtn">🤣 Laugh Now</button>
+      <button id="surpriseBtn" class="secondary">🎲 Surprise Me</button>
+    </div>
+
+    <div id="message" class="message" aria-live="polite">Pick an emoji and spread some happiness!</div>
+
+    <div class="stats">
+      <span class="chip static">🔥 Clicks: <b id="count">0</b></span>
+      <button class="chip" id="soundBtn" aria-pressed="true">🔊 Sound on</button>
+      <button class="chip" id="themeBtn" aria-pressed="false">🌙 Dark mode</button>
+    </div>
+  </section>
+
+  <section class="emoji-section">
+    <h2>Pick Your Mood 😎</h2>
+    <p>Every emoji has its own sound and animation. Tap to copy it too!</p>
+    <div class="emoji-grid" id="grid"></div>
+  </section>
+
+  <section class="emoji-section">
+    <h2>Sound Board 🎧</h2>
+    <p>Laughs, morning sounds and happy noises. Press and enjoy!</p>
+    <div class="board" id="board"></div>
+  </section>
+  <noscript><p style="text-align:center">Please enable JavaScript to play with the emojis 😊</p></noscript>
+</main>
+
+<footer>Made with ❤️, emojis, and a little madness 😂</footer>
+<script src="static/script.js"></script>
+</body>
+</html>
