@@ -44,6 +44,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   }
+  // mobile: unlock audio on the first touch; on iPhone also play a silent clip so the mute switch doesn't block Web Audio
+  let unlocked = false;
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  function unlockAudio() {
+    if (!soundOn || unlocked) return;
+    const c = ac(); if (!c) return;
+    unlocked = true;
+    try {
+      const s1 = c.createBufferSource(); s1.buffer = c.createBuffer(1, 1, 22050); s1.connect(c.destination); s1.start(0);
+      if (!isIOS) return;
+      const n = 2400, w = new DataView(new ArrayBuffer(44 + n * 2));
+      const str = (o, t) => [...t].forEach((ch, i) => w.setUint8(o + i, ch.charCodeAt(0)));
+      str(0, "RIFF"); w.setUint32(4, 36 + n * 2, true); str(8, "WAVEfmt "); w.setUint32(16, 16, true); w.setUint16(20, 1, true); w.setUint16(22, 1, true);
+      w.setUint32(24, 8000, true); w.setUint32(28, 16000, true); w.setUint16(32, 2, true); w.setUint16(34, 16, true); str(36, "data"); w.setUint32(40, n * 2, true);
+      const a = new Audio(URL.createObjectURL(new Blob([w], { type: "audio/wav" })));
+      a.loop = true; a.play().catch(() => {});
+    } catch {}
+  }
+  ["pointerdown", "touchend", "click"].forEach((e) => document.addEventListener(e, unlockAudio, { passive: true }));
   function tone(f, t, d, o = {}) {
     const osc = ctx.createOscillator(), g = ctx.createGain(), s = ctx.currentTime + t;
     osc.type = o.type || "sine";
