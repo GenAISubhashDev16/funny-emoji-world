@@ -1,0 +1,28 @@
+FUNNY EMOJI WORLD - FILE MAP + HOW TO ADD THINGS YOURSELF
+=========================================================
+index.html          page structure + your social links (edit text/links here)
+static/config.js    YOUR SETTINGS: name, language, unit, extra jokes/wishes/emojis/songs
+static/style.css    main design
+static/script.js    emoji cards, click sounds, bird garden, sound board, confetti
+static/scene.css    nature background, music player bar, footer, bird garden styles
+static/scene.js     morning/afternoon/evening/night scene, flowers, rain/snow, bird sounds chip
+static/music.js     music player (generated songs + your own mp3)
+static/info.css     Today card styles
+static/info.js      date, time, calendar, auto location + weather
+static/music/       put your own mp3 files here
+main.py             optional local FastAPI server (not needed online)
+
+1) ADD A JOKE / WISH / SURPRISE   -> static/config.js (extraJokes, extraWishes, extraSurprises)
+2) ADD A NEW EMOJI CARD           -> static/config.js (extraMoods), example inside the file
+3) ADD YOUR OWN SONG (mp3)        -> copy file to static/music/ , then in config.js:
+                                     songs: [{ name: "My Song", src: "static/music/my-song.mp3" }]
+4) CHANGE LANGUAGE OF DATE        -> config.js locale: "hi-IN" (Hindi) or "en-US"
+5) FAHRENHEIT                     -> config.js weather.unit: "F"
+6) ADD A NEW BIRD                 -> static/script.js, find "const birds = [" and add a line
+7) ADD A NEW SOUND                -> static/script.js, find "const S = {" and copy a line
+8) ADD A GENERATED SONG           -> static/music.js, find "const TRACKS = [" and copy a line
+9) CHANGE FLOWERS                 -> static/scene.js, find "const fl =" and change the emojis
+10) CHANGE SOCIAL LINKS           -> index.html, <footer> section
+
+Run locally : double-click index.html  OR  python -m http.server 8000
+Publish     : git add . && git commit -m "update" && git push   (GitHub Pages)

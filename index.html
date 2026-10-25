@@ -7,7 +7,10 @@
 <meta name="description" content="Funny Emoji World: tap emojis, hear happy sounds, laughs and morning vibes.">
 <title>Funny Emoji World 😂</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😂</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="static/style.css">
+<link rel="stylesheet" href="static/scene.css">
+<link rel="stylesheet" href="static/info.css">
 </head>
 <body>
 <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -46,10 +49,54 @@
     </div>
   </section>
 
+  <section class="emoji-section today" id="today">
+    <h2>Today 📅</h2>
+    <p>Live date, time and weather for your location.</p>
+    <div class="today-grid">
+      <div class="tcard" id="dateCard">
+        <div class="t-greet" id="tGreet"></div>
+        <div class="t-time" id="tTime">--:--:--</div>
+        <div class="t-day" id="tDay"></div>
+        <div class="t-date" id="tDate"></div>
+        <div class="t-meta"><span id="tWeek"></span><span id="tYear"></span></div>
+        <div class="cal" id="cal"></div>
+      </div>
+      <div class="tcard" id="wxCard">
+        <div class="w-loc">📍 <span id="wLoc">Detecting location...</span></div>
+        <div class="w-main">
+          <span class="w-icon" id="wIcon">⏳</span>
+          <div><div class="w-temp" id="wTemp">--</div><div class="w-cond" id="wCond">Loading weather...</div></div>
+        </div>
+        <div class="w-stats">
+          <span>🌡️ Feels <b id="wFeels">--</b></span>
+          <span>💧 Humidity <b id="wHum">--</b></span>
+          <span>💨 Wind <b id="wWind">--</b></span>
+          <span>🔺 High <b id="wHi">--</b></span>
+          <span>🔻 Low <b id="wLo">--</b></span>
+          <span>🌅 Sunrise <b id="wRise">--</b></span>
+          <span>🌇 Sunset <b id="wSet">--</b></span>
+        </div>
+        <div class="w-actions">
+          <button class="chip" id="wRefresh">🔄 Refresh</button>
+          <button class="chip" id="wGps">🎯 Exact location</button>
+        </div>
+        <div class="w-status" id="wStatus"></div>
+      </div>
+    </div>
+    <div class="forecast" id="forecast"></div>
+  </section>
+
   <section class="emoji-section">
     <h2>Pick Your Mood 😎</h2>
     <p>Every emoji has its own sound and animation. Tap to copy it too!</p>
     <div class="emoji-grid" id="grid"></div>
+  </section>
+
+  <section class="emoji-section bird-section" id="birds">
+    <h2>Bird Garden 🐦</h2>
+    <p>Tap a bird to hear its voice, or start the Dawn Chorus for a full morning concert!</p>
+    <div class="bird-row" id="birdRow"></div>
+    <button class="dawn" id="dawnBtn">🌄 Dawn Chorus</button>
   </section>
 
   <section class="emoji-section">
@@ -95,6 +142,10 @@
 
     <p>Made with ❤️, emojis, and a little madness 😂</p>
 </footer>
+<script src="static/config.js"></script>
 <script src="static/script.js"></script>
+<script src="static/scene.js"></script>
+<script src="static/music.js"></script>
+<script src="static/info.js"></script>
 </body>
 </html>

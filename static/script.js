@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   const rand = (a, b) => Math.random() * (b - a) + a;
   const pick = (l) => l[Math.floor(Math.random() * l.length)];
+  const CFG = window.SITE_CONFIG || {};
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const store = {
     get(k, f) { try { const v = localStorage.getItem(k); return v === null ? f : v; } catch { return f; } },
@@ -113,6 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
     heart: () => { tone(70, 0, 0.15, { to: 40, v: 0.5 }); tone(70, 0.2, 0.15, { to: 40, v: 0.5 }); tone(880, 0.45, 0.5, { v: 0.15 }); tone(1320, 0.55, 0.6, { v: 0.12 }); },
     coin: () => { tone(988, 0, 0.08, { type: "square", v: 0.08 }); tone(1319, 0.08, 0.5, { type: "square", v: 0.08 }); },
     whistle: () => tone(300, 0, 0.45, { to: 1500, v: 0.18, vib: [8, 20] }),
+    sparrow: () => { for (let i = 0; i < 7; i++) tone(rand(3000, 4200), i * 0.11, 0.07, { to: rand(2200, 3000), v: 0.1 }); },
+    dove: () => [[380, 0, 0.35], [440, 0.45, 0.4], [400, 0.95, 0.3], [400, 1.4, 0.45]].forEach(([f, t, d]) => tone(f, t, d, { to: f * 0.93, v: 0.2, a: 0.08, vib: [5, 6] })),
+    parrot: () => { tone(700, 0, 0.25, { type: "sawtooth", to: 1200, v: 0.07 }); tone(1000, 0.3, 0.3, { type: "sawtooth", to: 500, v: 0.07 }); noise(0, 0.5, { f: 1800, v: 0.04 }); tone(1400, 0.75, 0.2, { to: 1900, v: 0.12 }); tone(1900, 1, 0.25, { to: 1300, v: 0.12 }); },
+    owl: () => [[330, 0, 0.3], [330, 0.45, 0.3], [300, 1, 0.8]].forEach(([f, t, d]) => tone(f, t, d, { to: f * 0.88, v: 0.24, a: 0.06, vib: [4, 5] })),
+    rooster: () => { tone(500, 0, 0.18, { type: "sawtooth", to: 750, v: 0.1 }); tone(800, 0.22, 0.15, { type: "sawtooth", to: 950, v: 0.1 }); tone(750, 0.42, 0.22, { type: "sawtooth", to: 1050, v: 0.1 }); tone(1050, 0.68, 0.95, { type: "sawtooth", to: 600, v: 0.1, vib: [9, 25] }); noise(0.1, 1.4, { f: 1500, q: 0.6, v: 0.03 }); },
+    duck: () => { for (let i = 0; i < 3; i++) { tone(620, i * 0.24, 0.13, { type: "sawtooth", to: 340, v: 0.1 }); noise(i * 0.24, 0.1, { f: 900, v: 0.06 }); } },
+    chick: () => { for (let i = 0; i < 6; i++) tone(rand(2100, 2700), i * 0.17, 0.08, { to: rand(2900, 3400), v: 0.1 }); },
+    eagle: () => { tone(2600, 0, 1, { to: 1400, v: 0.13, vib: [30, 150] }); noise(0, 0.9, { f: 3200, q: 0.8, v: 0.05 }); },
+    dawn: () => { S.rooster(); setTimeout(() => S.birds(), 1700); setTimeout(() => S.sparrow(), 3400); setTimeout(() => S.dove(), 4300); },
     cheer: () => { S.applause(); S.tada(); }
   };
   function play(name) {
@@ -225,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "🐦 The birds are singing just for you. Good morning!",
     "🌈 New day, new smiles. Good morning, superstar!"
   ];
+  wishes.push(...(CFG.extraWishes || []));
   $("morningBtn").onclick = () => {
     if (addClick()) return celebrate();
     showMessage(pick(wishes)); sunrise(); confetti(); play("morning");
@@ -237,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "What do you call a fake noodle? An impasta! 🍝",
     "Why was the math book sad? Too many problems! 📚😭"
   ];
+  jokes.push(...(CFG.extraJokes || []));
   const faces = ["😂", "🤣", "😆", "😹", "🥳", "😎", "🤪", "🥰"];
   function doLaugh() {
     mascot.textContent = pick(["😂", "🤣", "😆", "😹"]);
@@ -263,6 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["🦄 You are magical. Never forget that!", "chime"],
     ["😎 Too cool to follow the rules!", "whistle"]
   ];
+  surprises.push(...(CFG.extraSurprises || []));
   let last = -1;
   $("surpriseBtn").onclick = () => {
     if (addClick()) return celebrate();
@@ -285,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["🤣", "Rolling", "belly", "shake", ["I can't breathe! 🤣", "Belly laugh unlocked!"]],
     ["🌞", "Morning", "morning", "spin", ["Good morning, sunshine! 🌞", "Rise and shine!"]]
   ];
+  moods.push(...(CFG.extraMoods || []));
   const grid = $("grid"), fine = matchMedia("(hover:hover)").matches;
   moods.forEach(([emoji, name, snd, anim, lines], i) => {
     const cell = document.createElement("div");
@@ -313,10 +327,42 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.appendChild(card); grid.appendChild(cell);
   });
 
+  /* ---------- bird garden ---------- */
+  const birds = [
+    ["🐦", "Sparrow", "sparrow", "bounce", "Chirp chirp! Good morning! 🐦"],
+    ["🕊️", "Dove", "dove", "sway", "Coo coo... peace and love 🕊️"],
+    ["🦜", "Parrot", "parrot", "wiggle", "Hello! Polly wants a cracker 🦜"],
+    ["🦉", "Owl", "owl", "jelly", "Hoo hoo! Wise vibes only 🦉"],
+    ["🐓", "Rooster", "rooster", "grow", "Cock-a-doodle-doo! Wake up! 🐓"],
+    ["🦆", "Duck", "duck", "shake", "Quack quack quack! 🦆"],
+    ["🐤", "Chick", "chick", "bounce", "Peep peep! So tiny, so cute 🐤"],
+    ["🦅", "Eagle", "eagle", "spin", "Screeee! Soaring high! 🦅"]
+  ];
+  const birdRow = $("birdRow");
+  if (birdRow) birds.forEach(([emoji, name, snd, anim, line], i) => {
+    const b = document.createElement("button");
+    b.className = "bird-btn"; b.style.setProperty("--i", i);
+    b.setAttribute("aria-label", `${name} ${emoji}`);
+    b.innerHTML = `<span>${emoji}</span><small>${name}</small>`;
+    b.onclick = () => {
+      const milestone = addClick();
+      animate(b.firstChild, anim); burstFrom(b, "🎵", 8); play(snd);
+      if (milestone) return celebrate();
+      showMessage(line);
+    };
+    birdRow.appendChild(b);
+  });
+  const dawnBtn = $("dawnBtn");
+  if (dawnBtn) dawnBtn.onclick = () => {
+    if (addClick()) return celebrate();
+    showMessage("🌄 Dawn chorus! The whole garden is waking up 🐓🐦🕊️"); sunrise(); confetti(25); play("dawn");
+  };
+
   /* ---------- sound board ---------- */
   const groups = {
     "😂 Laugh Lab": [["Giggle", "giggle"], ["Chuckle", "laugh"], ["Belly Laugh", "belly"], ["Evil Laugh", "evil"]],
     "🌅 Morning Vibes": [["Birds", "birds"], ["Chimes", "chime"], ["Sunrise", "morning"], ["Snore", "snore"]],
+    "🐦 Bird Voices": [["Sparrow", "sparrow"], ["Dove", "dove"], ["Parrot", "parrot"], ["Owl", "owl"], ["Rooster", "rooster"], ["Duck", "duck"], ["Chick", "chick"], ["Eagle", "eagle"]],
     "🎉 Happy Sounds": [["Applause", "applause"], ["Ta-da!", "tada"], ["Sparkle", "sparkle"], ["Coin", "coin"], ["Pop", "pop"], ["Boing", "boing"], ["Party Horn", "horn"], ["Oops", "trombone"]]
   };
   const board = $("board");
@@ -339,4 +385,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     board.appendChild(g);
   });
+  window.EW = { play };
 });

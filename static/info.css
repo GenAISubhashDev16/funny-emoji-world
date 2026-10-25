@@ -1,0 +1,31 @@
+/* ===== Today card (date, calendar, weather) ===== */
+.today-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:860px;margin:0 auto;text-align:left}
+.tcard{padding:22px;border-radius:26px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 28px #3a2a8014;animation:rise .6s cubic-bezier(.2,1.3,.4,1) both}
+.t-greet{font-weight:700;color:var(--purple);font-size:15px}
+.t-time{font-size:clamp(34px,8vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin:4px 0;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.t-day{font-size:22px;font-weight:800}
+.t-date{color:var(--muted);font-weight:600}
+.t-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.t-meta span{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--hover);color:var(--purple)}
+.cal-head{display:flex;justify-content:space-between;font-weight:700;margin:16px 0 8px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:12px}
+.cal-grid b{color:var(--muted);font-size:11px;padding-bottom:3px}
+.cal-grid span{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+.cal-grid span:not(:empty):hover{background:var(--hover)}
+.cal-grid .today{color:#fff;font-weight:800;background:linear-gradient(120deg,var(--purple),var(--pink));animation:todaypulse 2s ease-in-out infinite}
+@keyframes todaypulse{50%{box-shadow:0 0 0 6px #ff70b82e}}
+
+.w-loc{font-weight:700;color:var(--purple)}
+.w-main{display:flex;align-items:center;gap:14px;margin:12px 0}
+.w-icon{font-size:clamp(56px,14vw,76px);line-height:1;animation:bob 3.5s ease-in-out infinite;filter:drop-shadow(0 8px 8px #0002)}
+.w-temp{font-size:clamp(36px,9vw,48px);font-weight:800;line-height:1}
+.w-cond{color:var(--muted);font-weight:600;margin-top:4px}
+.w-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:13px;color:var(--muted)}
+.w-stats b{color:var(--dark)}
+.w-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.w-status{margin-top:10px;font-size:12px;color:var(--muted);min-height:16px}
+.forecast{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;max-width:860px;margin:18px auto 0}
+.fday{flex:1 1 90px;max-width:180px;padding:14px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--line);text-align:center;transition:transform .2s}
+.fday:hover{transform:translateY(-5px)}
+.fday b{display:block}.fday span{display:block;font-size:34px;margin:4px 0}.fday small{color:var(--muted);font-weight:600}
+@media (max-width:700px){.today-grid{grid-template-columns:1fr}}
